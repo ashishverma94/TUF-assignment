@@ -20,8 +20,8 @@ app.get("/test", (req, res) => {
 });
 
 // Routes
-const user = require("./controller/codeController.js");
-app.use("/api/v1/code", user);
+// const user = require("./controller/codeController.js");
+// app.use("/api/v1/code", user);
 
 connectDatabase();
 app.listen(process.env.PORT || 3000, () => {
