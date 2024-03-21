@@ -13,7 +13,6 @@ app.use(
   })
 );
 app.use(express.json());
-app.use("/", express.static("uploads"));
  
 app.get("/test", (req, res) => {
   res.end("Hello test!");
