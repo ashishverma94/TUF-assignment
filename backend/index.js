@@ -1,4 +1,4 @@
-const cors = require("cors");
+// const cors = require("cors");
 const express = require("express");
 // const connectDatabase = require("./db/Database.js");
  
@@ -6,12 +6,12 @@ const express = require("express");
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    credentials: true,
-  })
-);
+// app.use(
+//   cors({
+//     origin: ["http://localhost:5173"],
+//     credentials: true,
+//   })
+// );
 app.use(express.json());
  
 app.get("/test", (req, res) => {
