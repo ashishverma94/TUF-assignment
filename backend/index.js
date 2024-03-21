@@ -1,6 +1,6 @@
 const cors = require("cors");
 const express = require("express");
-const connectDatabase = require("./db/Database.js");
+// const connectDatabase = require("./db/Database.js");
  
 // require("dotenv").config();
 
@@ -22,7 +22,7 @@ app.get("/test", (req, res) => {
 // const user = require("./controller/codeController.js");
 // app.use("/api/v1/code", user);
 
-connectDatabase();
+// connectDatabase();
 app.listen(process.env.PORT || 3000, () => {
   console.log(`Server is running on port ${process.env.PORT || 3000}`);
 });
