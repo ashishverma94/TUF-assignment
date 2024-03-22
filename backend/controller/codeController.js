@@ -7,8 +7,8 @@ const router = express.Router();
 //  USER REGISTRATION
 router.post("/runcode", async (req, res) => {
   try {
-    const { code, language_id, input, name } = req.body;
-
+    const { code, language_id, input, name,output } = req.body;
+console.log(req.body) ;
     const result = await CodeData.create({
       code,
       language_id,
