@@ -42,7 +42,7 @@ router.post("/runcode", async (req, res) => {
       language_id,
       input,
       name,
-      // output,
+      output:"hello",
     });
 
     res.status(201).json({

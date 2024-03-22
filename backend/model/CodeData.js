@@ -19,6 +19,10 @@ const codeSchema = mongoose.Schema({
     type: String,
   },
 
+  output:{
+    type:String,
+  },
+
   createdAt: {
     type: Date,
     default: Date.now(),
