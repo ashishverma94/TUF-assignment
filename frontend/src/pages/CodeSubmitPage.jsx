@@ -1,5 +1,5 @@
 import axios from "axios";
-import {BACKEND_URL} from "../url" ;
+import { BACKEND_URL } from "../url";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -12,14 +12,50 @@ const CodeSubmitPage = () => {
   const [code, setCode] = useState("");
   const [stdin, setStdin] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const RAPID_API_KEY = "a83a175960mshbd6609b5a9cd471p16fc1bjsn158b783543ae" ;
 
+  async function findOutput ( code, language_id, stdin ) {
+    const submissionResponse = await axios.post(
+      "https://judge0-ce.p.rapidapi.com/submissions",
+      {
+        source_code: code,
+        language_id: language_id,
+        stdin: stdin || "",
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+          "x-rapidapi-key": RAPID_API_KEY,
+        },
+      }
+    );
+
+    const submissionToken = submissionResponse.data.token;
+
+    const resultResponse = await axios.get(
+      `https://judge0-ce.p.rapidapi.com/submissions/${submissionToken}`,
+      {
+        headers: {
+          "x-rapidapi-host": "judge0-ce.p.rapidapi.com",
+          "x-rapidapi-key": RAPID_API_KEY,
+        },
+      }
+    );
+
+    return resultResponse.data.stdout;
+  };
+
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    const language_id = lang_id[lang];
+    const output = await findOutput(code, language_id, stdin);
     const data = {
-      name: name,
-      code: code,
+      name,
+      code,
+      output,
       input: stdin,
-      language_id: lang_id[lang],
+      language_id,
     };
 
     axios
@@ -99,9 +135,9 @@ const CodeSubmitPage = () => {
 
           <div>
             <label className="pb-2">
-              Standard Input (STDIN) 
+              Standard Input (STDIN)
               <textarea
-                cols= {30}
+                cols={30}
                 rows={8}
                 required
                 type="text"
