@@ -12,9 +12,9 @@ const CodeSubmitPage = () => {
   const [code, setCode] = useState("");
   const [stdin, setStdin] = useState("");
 
-  const RAPID_API_KEY = "a83a175960mshbd6609b5a9cd471p16fc1bjsn158b783543ae" ;
+  const RAPID_API_KEY = "a83a175960mshbd6609b5a9cd471p16fc1bjsn158b783543ae";
 
-  async function findOutput ( code, language_id, stdin ) {
+  async function findOutput(code, language_id, stdin) {
     const submissionResponse = await axios.post(
       "https://judge0-ce.p.rapidapi.com/submissions",
       {
@@ -44,9 +44,9 @@ const CodeSubmitPage = () => {
     );
 
     return resultResponse.data.stdout;
-  };
+  }
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const language_id = lang_id[lang];
     const output = await findOutput(code, language_id, stdin);
@@ -61,7 +61,6 @@ const CodeSubmitPage = () => {
     axios
       .post(`${BACKEND_URL}/api/v1/code/runcode`, data)
       .then((response) => {
-        console.log("Response:", response.data);
         toast.success("Code Submitted Successfully!");
         navigate("/all-codes");
       })
@@ -77,84 +76,82 @@ const CodeSubmitPage = () => {
           Make your submission
         </h1>
       </div>
-      <div className="h-[80vh] w-[80%] 800px:w-[50%] flex items-center justify-center bg-[white] shadow mt-5 mb-5 rounded-[4px] p-3 ">
-        <form className=" w-[60%]" onSubmit={handleSubmit}>
+      <div className="h-[80vh] w-[90%] md:w-[70%]   flex items-center justify-center bg-[white] shadow mt-5 mb-5 rounded-[4px] p-3 ">
+        <form className="w-full" onSubmit={handleSubmit}>
           <br />
-          <div>
-            <label className="pb-2">
-              Name <span className="text-red-500">*</span>
-              <input
-                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
-                type="text"
-                name="name"
-                value={name}
-                placeholder="Enter your event product name..."
-                onChange={(e) => setName(e.target.value)}
-              />
-            </label>
+          <div className="flex gap-3">
+            <div>
+              <label className="pb-2">
+                Name <span className="text-red-500">*</span>
+                <input
+                  className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-500 rounded-[9px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                  type="text"
+                  name="name"
+                  value={name}
+                  placeholder="username"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </label>
+            </div>
+
+            <div>
+              <label className="pb-2">
+                Language <span className="text-red-500">*</span>
+                <select
+                  value={lang}
+                  onChange={(e) => setLang(e.target.value)}
+                  className="w-full border-gray-500   mt-2 border h-[35px] rounded-[9px]"
+                >
+                  <option value="Choose a category">Choose a Language</option>
+                  {languages &&
+                    languages.map((i) => (
+                      <option key={i.language_id} value={i.title}>
+                        {i.title}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            </div>
           </div>
           <br />
 
-          <div>
-            <label className="pb-2">
-              Language <span className="text-red-500">*</span>
-              <select
-                value={lang}
-                onChange={(e) => setLang(e.target.value)}
-                className="w-full mt-2 border h-[35px] rounded-[5px]"
-              >
-                <option value="Choose a category">Choose a Language</option>
-                {languages &&
-                  languages.map((i) => (
-                    <option key={i.language_id} value={i.title}>
-                      {i.title}
-                    </option>
-                  ))}
-              </select>
-            </label>
-          </div>
-          <br />
+          <div className="flex gap-3">
+            <div className="w-[70%]">
+              <label className="pb-2">
+                Source Code <span className="text-[red]">*</span>
+                <textarea
+                  required
+                  type="text"
+                  name="description"
+                  value={code}
+                  placeholder="Enter your source code"
+                  onChange={(e) => setCode(e.target.value)}
+                  className="mt-2 h-[20rem]  w-full appearance-none block  px-3  border border-gray-500 rounded-[9px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                ></textarea>
+              </label>
+            </div>
+            <br />
 
-          <div>
-            <label className="pb-2">
-              Source Code <span className="text-red-500">*</span>
-              <textarea
-                cols="30"
-                rows="8"
-                required
-                type="text"
-                name="description"
-                value={code}
-                placeholder="Enter your event product description..."
-                onChange={(e) => setCode(e.target.value)}
-                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
-              ></textarea>
-            </label>
+            <div className="flex items-end">
+              <label className="pb-2 ">
+                Standard Input (STDIN)
+                <textarea
+                  required
+                  type="text"
+                  name="description"
+                  value={stdin}
+                  placeholder="Enter your input"
+                  onChange={(e) => setStdin(e.target.value)}
+                  className="mt-2 appearance-none block   px-3 h-[8rem] border border-gray-500 rounded-[7px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+                ></textarea>
+              </label>
+            </div>
           </div>
-          <br />
 
-          <div>
-            <label className="pb-2">
-              Standard Input (STDIN)
-              <textarea
-                cols={30}
-                rows={8}
-                required
-                type="text"
-                name="description"
-                value={stdin}
-                placeholder="Enter your event product description..."
-                onChange={(e) => setStdin(e.target.value)}
-                className="mt-2 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
-              ></textarea>
-            </label>
-          </div>
-          <br />
-
-          <div>
+          <div className="flex items-center justify-center">
             <button
               onClick={handleSubmit}
-              className="mt-2 cursor-pointer hover:bg-red-600 appearance-none block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
+              className="mt-5 cursor-pointer  hover:bg-[#2f82ef] appearance-none bg-[#6969f0] text-[white]  block w-[150px] px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 sm:text-sm"
             >
               Submit Code
             </button>
