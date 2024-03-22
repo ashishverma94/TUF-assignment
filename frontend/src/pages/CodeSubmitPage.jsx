@@ -23,11 +23,11 @@ const CodeSubmitPage = () => {
     };
 
     axios
-      .post(`${BACKEND_URL}/api/v1/user/runcode`, data)
+      .post(`${BACKEND_URL}/api/v1/code/runcode`, data)
       .then((response) => {
         console.log("Response:", response.data);
         toast.success("Code Submitted Successfully!");
-        navigate("/all-users");
+        navigate("/all-codes");
       })
       .catch((error) => {
         toast.error("Something went wrong !");
