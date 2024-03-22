@@ -1,15 +1,16 @@
-import { toast } from "react-toastify";
+import axios from "axios";
+import {BACKEND_URL} from "../url" ;
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { languages, lang_id } from "../static/data";
-import axios from "axios";
 
 const CodeSubmitPage = () => {
   const navigate = useNavigate();
+  const [lang, setLang] = useState("");
   const [name, setName] = useState("");
   const [code, setCode] = useState("");
   const [stdin, setStdin] = useState("");
-  const [lang, setLang] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +23,7 @@ const CodeSubmitPage = () => {
     };
 
     axios
-      .post("http://localhost:3000/api/v1/user/runcode", data)
+      .post(`${BACKEND_URL}/api/v1/user/runcode`, data)
       .then((response) => {
         console.log("Response:", response.data);
         toast.success("Code Submitted Successfully!");

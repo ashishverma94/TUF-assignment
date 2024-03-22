@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
-
   return (
     <>
       <BrowserRouter>
@@ -16,17 +15,17 @@ function App() {
         </Routes>
 
         <ToastContainer
-          position="top-right"
-          autoClose={4000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
           draggable
+          rtl={false}
+          closeOnClick
           pauseOnHover
           theme="colored"
+          autoClose={4000}
+          pauseOnFocusLoss
           transition:Bounce
+          newestOnTop={false}
+          position="top-right"
+          hideProgressBar={false}
         />
       </BrowserRouter>
     </>
